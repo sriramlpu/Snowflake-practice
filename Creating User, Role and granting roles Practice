@@ -1,0 +1,30 @@
+CREATE /*[OR REPLACE]*/ USER SAI 
+PASSWORD = 'ram1@' 
+default_role = myrole
+must_change_password = true;
+
+CREATE USER IF NOT EXISTS sai 
+PASSWORD = 'sriram1@' 
+default_role = myrole   -- WE HAVE TO GRANT ROLE EXPLICITLY
+must_change_password = true;
+
+SHOW USERS;
+
+CREATE /* [REPLACE] */ ROLE IF NOT EXISTS myrole; -- CREATING A ROLE
+
+GRANT ROLE myrole TO USER sai; -- GRANTING ROLE TO USER sai
+
+ALTER USER sai RENAME TO sairam; -- it will rename of user from sai to sairam
+ALTER USER sairam RESET PASSWORD; -- it will send link to reset password ang go to the link to reset password
+
+GRANT MODIFY, USAGE, CREATE SCHEMA ON DATABASE SNOWFLAKE_PRACTICE TO ROLE myrole; -- GRANTING MODIFY, USAGE, CREATE SCHEAM ON DATABASE TO ROLE myrole
+
+GRANT MODIFY, MONITOR, USAGE, OPERATE ON WAREHOUSE COMPUTE_WH TO ROLE myrole;
+
+GRANT MODIFY, MONITOR ON RESOURCE MONITOR for_compute TO ROLE myrole;
+
+GRANT MODIFY, MONITOR, USAGE ON SCHEMA SNOWFLAKE_SCHEMA TO ROLE myrole;
+
+GRANT SELECT, INSERT, UPDATE, DELETE, TRUNCATE ON TABLE EMP TO ROLE myrole;
+
+SHOW ROLES;
