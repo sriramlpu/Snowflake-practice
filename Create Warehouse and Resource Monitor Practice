@@ -1,0 +1,25 @@
+CREATE RESOURCE MONITOR for_compute with credit_quota = 2
+FREQUENCY = MONTHLY            -- { MONTHLY | DAILY | WEEKLY | YEARLY | NEVER }
+START_TIMESTAMP = '2022-11-03 00:00 PST' -- { <timestamp> | IMMEDIATELY }
+end_timestamp = '2022-12-02 00:00 PST'
+notify_users = ('SRIRAMLPU')
+triggers on 50 percent do notify
+         on 75 percent do notify
+         on 95 percent do suspend
+         on 100 percent do suspend_immediate;
+
+show users;
+
+
+
+
+CREATE /*[ OR REPLACE ]*/ WAREHOUSE IF NOT EXISTS COMPUTE_WH
+WAREHOUSE_SIZE = XSMALL /* XSMALL | SMALL | MEDIUM | LARGE | XLARGE | XXLARGE | XXXLARGE | X4LARGE | X5LARGE | X6LARGE*/
+  MAX_CLUSTER_COUNT = 2
+  MIN_CLUSTER_COUNT = 1
+  SCALING_POLICY = STANDARD /* STANDARD | ECONOMY */
+  AUTO_SUSPEND = 360  -- 360 is the time in seconds /* <num> | NULL */
+  AUTO_RESUME = TRUE /* TRUE | FALSE */
+  INITIALLY_SUSPENDED = TRUE /* TRUE | FALSE */ -- Specifies whether the warehouse is created initially in the ‘Suspended’ state.
+  RESOURCE_MONITOR = for_compute
+  COMMENT = 'Virtual Warehouse For Processing';
