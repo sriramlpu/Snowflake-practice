@@ -1,5 +1,11 @@
-create stage inter;
-alter stage inter set file_format = csv_format;
+snowsql -a iv61208.us-east-2.aws -u sriramlpu
+
+put file://E:\snow_prac\files_for_data_loading\csv_tsv_psv_fil
+                                                         es\emp.csv @inter;
+
+create stage inter
+file_format = csv_format;
+-- alter stage inter set file_format = csv_format; -- to set fileformat if we missed while creating stage
 
 create or replace file format csv_format
 type = csv
