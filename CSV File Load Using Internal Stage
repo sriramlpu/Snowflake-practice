@@ -1,0 +1,23 @@
+create stage inter;
+alter stage inter set file_format = csv_format;
+
+create or replace file format csv_format
+type = csv
+field_delimiter = ','
+empty_field_as_null = true  -- it fills empty fields as null
+skip_header = 1 -- it skips the header
+skip_blank_lines = true -- it skips any blank line csv file
+field_optionally_enclosed_by = '\042' -- '\042' (for double quotes) | '\047' (for single quotes) -- used if any field value is enclosed with single or double quotes
+-- NULL_IF = ('\\N', 'NULL', 'NUL', '') -- if any values in data like '\\N', 'NULL', 'NUL', '' are set to NULL
+;
+truncate table emp;
+copy into emp from @inter
+-- on_error = 'continue' --| 'skip_file' | 'continue' | 'Abort_statement'(recommended)| 'skip_file_2'
+-- force = True;
+-- purge = true -- delete file from stage after loading
+-- VALIDATION_MODE = RETURN_ALL_ERRORS  -- to validate errors and it doesn't load
+validation_mode = return_all_errors;
+
+show stages;
+list @inter;
+remove @inter/emp; -- to remove file from internal stage
