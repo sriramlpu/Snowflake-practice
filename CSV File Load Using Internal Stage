@@ -1,7 +1,6 @@
 snowsql -a iv61208.us-east-2.aws -u sriramlpu
 
-put file://E:\snow_prac\files_for_data_loading\csv_tsv_psv_fil
-                                                         es\emp.csv @inter;
+put file://E:\snow_prac\files_for_data_loading\csv_tsv_psv_files\emp.csv @inter;
 
 create stage inter
 file_format = csv_format;
