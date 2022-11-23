@@ -1,0 +1,55 @@
+create table consume_data(empId int,
+                          empName varchar(30),
+                          empRole varchar(20));
+insert into consume_data values(1,'sai','devops'),
+                                (2, 'sriram', 'snowflake'),
+                                (3, 'sairam', 'aws');
+  select * from consume_data;
+  select * from consume_data_stream;
+create or replace stream consume_data_stream on table consume_data;
+
+create or replace task stream_data_into_table
+warehouse = compute_wh
+schedule = '2 minute'  
+when system$stream_has_data('SNOWFLAKE_PRACTICE.SNOWFLAKE_SCHEMA.CONSUME_DATA_STREAM')
+as
+merge into consume_data cd using consume_data_stream cds
+on cd.empId = cds.empId
+when matched and metadata$action = 'DELETE' and metadata$isupdate = 'FALSE'
+then delete
+when not matched and METADATA$ACTION = 'INSERT' AND METADATA$ISUPDATE = 'FALSE'
+then insert (cd.empId, cd.empName, cd.empRole) values(cds.empId, cds.empName, cds.empRole);
+
+
+insert into consume_data values(5, 'ram', 'data engineer');
+alter task stream_data_into_table resume;
+alter task stream_data_into_table suspend;
+
+
+
+// To see all tasks history with last executed task first
+select  *from table(information_schema.task_history())
+order by scheduled_time desc;  
+  
+// To see history of a specific task
+select  *  from table(information_schema.task_history(
+    task_name => 'stream_data_into_table')
+ );
+
+// To see results of a specific task in last 6 hours
+select  *  from table(information_schema.task_history(
+    scheduled_time_range_start => dateadd('hour',-6,current_timestamp()),
+    result_limit => 4,
+    task_name => 'stream_data_into_table')
+ ); 
+    
+// To see results in a given time period
+select  *  from table(information_schema.task_history(
+    scheduled_time_range_start => to_timestamp_ltz('2022-07-17 1:00:00.000 -0700'),
+    scheduled_time_range_end => to_timestamp_ltz('2022-07-18 1:00:00.000 -0700'))
+ ); 
+
+select to_timestamp_ltz(current_timestamp);
+
+
+
