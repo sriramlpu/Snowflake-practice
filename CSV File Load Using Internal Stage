@@ -11,6 +11,7 @@ type = csv
 field_delimiter = ','
 empty_field_as_null = true  -- it fills empty fields as null
 skip_header = 1 -- it skips the header
+escape = '\134'
 skip_blank_lines = true -- it skips any blank line csv file
 field_optionally_enclosed_by = '\042' -- '\042' (for double quotes) | '\047' (for single quotes) -- used if any field value is enclosed with single or double quotes
 -- NULL_IF = ('\\N', 'NULL', 'NUL', '') -- if any values in data like '\\N', 'NULL', 'NUL', '' are set to NULL
