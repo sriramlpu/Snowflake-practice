@@ -1,0 +1,120 @@
+select left('saisriram',3);
+select right('saisriram',3);
+select substr('saisriram',0); -- saisriram
+select substr('saisriram',0,3); -- sai
+select substr('saisriram',1,3); --sai
+select substr('saisriram',1,15); -- saisriram
+select substr('saisriram',-3,3) -- ram
+select substr('saisriram',-3,6); -- ram
+select length('saisriram'); --- 9
+
+select upper('saisriram'); -- SAISRIRAM
+select lower('SAISRIRAM'); -- saisriram
+select ltrim('       saisriram      ');
+select rtrim('       saisriram      ');
+select trim('       saisriram      ');
+select replace('The journey has began then', 'the', '----');
+select reverse('saisriram');
+
+select charindex('_','sai_sri_ram',5); -- here 5 is starting position
+select concat('the',2,'began',3);
+
+select split('sai-sri-ram','-'); -- ["sai","sri","ram"]
+select * from table(split_to_table('sai,sri,ram',','));
+
+select split_part('sai-sri-ram','-',0); --sai
+select split_part('sai-sri-ram','-',1); -- sai
+select split_part('sai-sri-ram','-',2); -- sri
+select split_part('sai-sri-ram','-',3); -- ram
+select split_part('sai-sri-ram','-',4); -- empty field
+
+select split_part('sai-sri-ram','-',-1); -- ram
+select split_part('sai-sri-ram','-',-2); -- sri
+select split_part('sai-sri-ram','-',-3); -- sai
+select split_part('sai-sri-ram','-',-4); -- empty field
+
+
+select ifnull(empId, 456),* from emp;
+select ifnull(empName, 'hello'),* from emp;
+select ifnull(empRole, 'hello'),* from emp;
+
+---------- null, 'NULL' are not same null is system null, 'NULL' is user given null
+
+
+select coalesce(empId,empName,Emprole,1000) from emp;  --when using coalease if user defined null is present in data then it will raise an error
+insert into emp values(null,'NULL',null);
+
+
+select greatest(1,101,18,478); -- max only recieves one argument this is the major difference between max and greatest
+select least(101,0,3,9348);
+
+select startswith('saisriram', 's');
+select endswith('saisriram','m');
+
+select contains('saisriram','sai');
+select position('sr','saisriram',1);
+
+
+select iff(true, 'yes', 'no');
+select iff(false, 'yes', 'no');
+
+select date_part('year', '1997-05-07'::date);
+select date_part('quarter', '1997-05-07'::date);
+select date_part('month', '1997-05-07'::date);
+select date_part('day', '1997-05-07'::date);
+select date_part('hour', current_timestamp());
+select current_timestamp();
+select date_part('minute', current_timestamp());
+select date_part('second', current_timestamp());
+select date_part('nanosecond', current_timestamp());
+
+select date_trunc('year', '1997-05-07'::date);
+select date_trunc('quarter', '1997-05-07'::date);
+select date_trunc('month', '1997-05-07'::date);
+select date_trunc('day', '1997-05-07 05:06:41.047 -08:00'::timestamp);
+select date_trunc('hour', '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select current_timestamp();
+select date_trunc('minute', '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select date_trunc('second', '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select date_trunc('nanosecond', '2022-12-10 05:06:41.047 -08:00'::timestamp);
+
+select dateadd('year',2, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select dateadd('quarter',2, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select dateadd('month',3, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select dateadd('day',4, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select dateadd('hour',4, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select dateadd('minute',3, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select dateadd('second',5, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select dateadd('nanosecond',2, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+
+
+select datediff('year',2, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select datediff('quarter',2, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select datediff('month',3, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select datediff('day',4, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select datediff('hour',4, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select datediff('minute',3, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select datediff('second',5, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+select datediff('nanosecond',2, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+
+
+select year('2022-12-10 05:06:41.047 -08:00'::timestamp);
+select quarter('2022-12-10 05:06:41.047 -08:00'::timestamp);
+select month('2022-12-10 05:06:41.047 -08:00'::timestamp);
+select day('2022-12-10 05:06:41.047 -08:00'::timestamp);
+select hour('2022-12-10 05:06:41.047 -08:00'::timestamp);
+select minute('2022-12-10 05:06:41.047 -08:00'::timestamp);
+select second('2022-12-10 05:06:41.047 -08:00'::timestamp);
+select dayofmonth('2022-12-10 05:06:41.047 -08:00'::timestamp);
+select dayofweek('2022-12-10 05:06:41.047 -08:00'::timestamp);
+select dayname('2022-12-10 05:06:41.047 -08:00'::timestamp);
+select monthname('2022-12-10 05:06:41.047 -08:00'::timestamp);
+select dayofyear('2022-12-10 05:06:41.047 -08:00'::timestamp);
+select week('2022-12-10 05:06:41.047 -08:00'::timestamp);
+
+select last_day('2022-12-10 05:06:41.047 -08:00'::timestamp,'year');
+select last_day('2022-12-10 05:06:41.047 -08:00'::timestamp,'month');
+select last_day('2022-12-10 05:06:41.047 -08:00'::timestamp);
+select last_day('2022-12-10 05:06:41.047 -08:00'::timestamp,'quarter');
+
+select to_date('2013-05-17'), date('2013-05-17');
