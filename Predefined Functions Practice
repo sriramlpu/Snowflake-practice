@@ -118,3 +118,10 @@ select last_day('2022-12-10 05:06:41.047 -08:00'::timestamp);
 select last_day('2022-12-10 05:06:41.047 -08:00'::timestamp,'quarter');
 
 select to_date('2013-05-17'), date('2013-05-17');
+
+TO_DATE('2012.07.23', 'YYYY.MM.DD') ToDate
+
+
+EXTRACT(day from joindate) day,
+		EXTRACT(month from joindate) month,
+		EXTRACT(year from joindate) year,
