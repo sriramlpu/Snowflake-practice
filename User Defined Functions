@@ -1,3 +1,4 @@
+----------------------------------------------- Scalar Function -----------------------------------------------------------------------------------
 create or replace function dateconv(data varchar)
 returns date
 as
@@ -15,4 +16,15 @@ as
 'select try_to_date(to_char(to_date(substr(data,1,8),''YYYYMMDD''),''YYYY-MM-DD''))';
 
 
+-------------------------------------------------------- Table Function -----------------------------------------------------------------------------------------
+
+create or replace function dataret(data varchar)
+returns table(EMPID INT, EMPNAME VARCHAR, EMPROLE VARCHAR)
+as
+$$
+select EMPID, EMPNAME, EMPROLE from EMP
+where EMPNAME = DATA
+$$;
+
+select * from table(dataret('sai'));
 
