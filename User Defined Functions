@@ -1,0 +1,18 @@
+create or replace function dateconv(data varchar)
+returns date
+as
+$$
+select try_to_date(to_char(to_date(substr(data,1,8),'YYYYMMDD'),'YYYY-MM-DD'))
+$$;
+
+select dateconv('199757');
+
+select try_to_date(to_char(to_date(substr('19970507',1,8),'YYYYMMDD'),'YYYY-MM-DD'));
+
+create function dateconv1(data varchar)
+returns date
+as
+'select try_to_date(to_char(to_date(substr(data,1,8),''YYYYMMDD''),''YYYY-MM-DD''))';
+
+
+
