@@ -87,15 +87,7 @@ select dateadd('minute',3, '2022-12-10 05:06:41.047 -08:00'::timestamp);
 select dateadd('second',5, '2022-12-10 05:06:41.047 -08:00'::timestamp);
 select dateadd('nanosecond',2, '2022-12-10 05:06:41.047 -08:00'::timestamp);
 
-
-select datediff('year',2, '2022-12-10 05:06:41.047 -08:00'::timestamp);
-select datediff('quarter',2, '2022-12-10 05:06:41.047 -08:00'::timestamp);
-select datediff('month',3, '2022-12-10 05:06:41.047 -08:00'::timestamp);
-select datediff('day',4, '2022-12-10 05:06:41.047 -08:00'::timestamp);
-select datediff('hour',4, '2022-12-10 05:06:41.047 -08:00'::timestamp);
-select datediff('minute',3, '2022-12-10 05:06:41.047 -08:00'::timestamp);
-select datediff('second',5, '2022-12-10 05:06:41.047 -08:00'::timestamp);
-select datediff('nanosecond',2, '2022-12-10 05:06:41.047 -08:00'::timestamp);
+SELECT DATEDIFF(month, '2017/08/25', '2011/08/25') AS DateDiff;
 
 
 select year('2022-12-10 05:06:41.047 -08:00'::timestamp);
