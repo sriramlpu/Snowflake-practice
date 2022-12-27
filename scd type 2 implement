@@ -1,0 +1,28 @@
+drop table emp;
+
+create or replace table emp(empId int, Name varchar(30), salary int);
+
+create or replace stream emp_stream on table emp;
+
+insert into emp values(1001, 'raju', 5000),
+(1002, 'surya', 10000);
+
+select * from emp_stream;
+
+
+create or replace table emp_consume(id int identity(1,1), empId int, Name varchar(30), salary int, startDate date, enddate date, currentflag char(1));
+
+select * from emp_consume;
+
+update emp set salary = 8000
+where name = 'raju';
+
+merge into emp_consume ec
+using emp_stream es on ec.empid = es.empid and ec.name = es.name and ec.salary = es.salary
+when matched and metadata$action = 'DELETE' and metadata$isupdate = 'TRUE'
+then update set ec.enddate = current_date(),
+                ec.currentflag = 'N'
+when not matched and metadata$action = 'INSERT'
+then insert (ec.empid, ec.name,ec.salary, ec.startdate, ec.enddate, ec.currentflag) values(es.empid, es.name, es.salary, '2022-12-10', null, 'Y');
+
+
